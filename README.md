@@ -1,18 +1,10 @@
-
-  <!-- QGIS 3.40 LTE -->
+<p align="center">
   ![QGIS](https://img.shields.io/badge/QGIS-3.40%20LTE-2F6F8E?style=flat-square)
-
-  <!-- Python >=3.10 -->
   ![Python](https://img.shields.io/badge/Python-%3E%3D3.10-F0DB4F?style=flat-square)
-
-  <!-- Documentation -->
   [![Documentation](https://img.shields.io/badge/Documentation-Read-4CAF50?style=flat-square)](https://qgeoai.nextelia.fr/)
-
-  <!-- Release 0.9 -->
   ![Release](https://img.shields.io/badge/Release-0.9-607D8B?style=flat-square)
-
-  <!-- Licence GPLv2+ -->
   ![Licence](https://img.shields.io/badge/License-GPLv2+-009688?style=flat-square)
+</p>
 
 
 # QGeoAI Server
