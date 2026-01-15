@@ -158,11 +158,11 @@ if not client.is_server_running():
 
 <details>
 <summary><b>Server won't start</b></summary>
-```bash
+
+<pre><code class="language-bash">
 # Check Python environment
 ~/.qgeoai/env/bin/python --version  # Linux/Mac
 %USERPROFILE%\.qgeoai\env\Scripts\python --version  # Windows
-```
 
 # Check dependencies
 ~/.qgeoai/env/bin/pip list | grep fastapi
@@ -170,40 +170,47 @@ if not client.is_server_running():
 # Reinstall if needed
 cd qgeoai_server
 python install_server.py
+</code></pre>
+
 </details>
+
 
 <details>
 <summary><b>Port already in use</b></summary>
 
 The server automatically finds a free port between 8765 and 8775. Check the port used:
-```bash
+
+<pre><code class="language-bash">
 cat ~/.qgeoai/server.port  # Linux/Mac
 type %USERPROFILE%\.qgeoai\server.port  # Windows
-```
+</code></pre>
+
 </details>
+
 
 <details>
 <summary><b>GPU not detected</b></summary>
-```bash
+
+<pre><code class="language-bash">
 # Verify drivers
 nvidia-smi
-```
 
 # Reinstall PyTorch with CUDA
-```
 cd qgeoai_server
 python install_server.py  # Auto-detects GPU
-```
+</code></pre>
 
 Note: CPU mode works but is slower for SAM2 and YOLO.
 
 </details>
 
+
 <details>
 <summary><b>QGIS can't find server</b></summary>
 
 In QGIS Python Console:
-```python
+
+<pre><code class="language-python">
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path.home() / '.qgeoai'))
@@ -211,25 +218,26 @@ sys.path.insert(0, str(Path.home() / '.qgeoai'))
 from qgeoai_client import QGeoAIClient
 client = QGeoAIClient()
 print(client.is_server_running())  # Should be True
-```
+</code></pre>
 
 </details>
+
 
 <details>
 <summary><b>Check logs</b></summary>
-```bash
+
+<pre><code class="language-bash">
 # Server logs
 cat ~/.qgeoai/logs/server.log  # Linux/Mac
 type %USERPROFILE%\.qgeoai\logs\server.log  # Windows
-```
 
 # Startup logs
-```
 cat ~/.qgeoai/logs/server_debug.log  # Linux/Mac
 type %USERPROFILE%\.qgeoai\logs\server_debug.log  # Windows
-```
+</code></pre>
 
 </details>
+
 
 ## Security & Privacy
 
