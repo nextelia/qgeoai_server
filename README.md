@@ -1,88 +1,94 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/QGIS-3.40%20LTE-2F6F8E?style=flat-square" />
-  <img src="https://img.shields.io/badge/Python-%3E%3D3.10-F0DB4F?style=flat-square" />
-  <a href="https://qgeoai.nextelia.fr/">
-    <img src="https://img.shields.io/badge/Documentation-Read-4CAF50?style=flat-square" />
-  </a>
-  <img src="https://img.shields.io/badge/Release-0.9-607D8B?style=flat-square" />
-  <img src="https://img.shields.io/badge/License-GPLv2+-009688?style=flat-square" />
-</p>
-
-
+<div align="center">
 
 # QGeoAI Server
 
-**Local server for QGIS QGeoAI Tools plugins** - Annotation, model training, inference and geospatial processing
+### Local AI server for QGIS geospatial workflows
 
---- 
+<p>
+  <img src="https://img.shields.io/badge/QGIS-3.40%20LTE-589632?style=for-the-badge&logo=qgis&logoColor=white" alt="QGIS"/>
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Release-0.9.0-blue?style=for-the-badge" alt="Release"/>
+  <img src="https://img.shields.io/badge/License-GPLv2+-green?style=for-the-badge" alt="License"/>
+</p>
 
-<img src="assets/logo.png" alt="QGeoAI Server" width="1024"/>
+<p>
+  <a href="https://qgeoai.nextelia.fr">Documentation</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#troubleshooting">Troubleshooting</a>
+</p>
 
-## 🎯 What is it?
----
-
-QGeoAI Server is a **local server that runs only on your computer**. It enables QGIS plugins (QAnnotate, QModel Trainer, QPredict, QToolbox) to access AI tools (PyTorch, SAM2, YOLO) without burdening QGIS.
-
-### Why a local server?
-
-- **Dependency isolation**: Heavy libraries (PyTorch, Ultralytics) run in a separate Python environment
-- **Performance**: No need to reload models for each operation
-- **Stability**: QGIS stays lightweight and responsive
-- **GPU**: Automatic CUDA support if you have an NVIDIA card
-
-### 🔒 Your data stays with you
-
-- ✅ **100% local**: Server runs only on `127.0.0.1` (localhost)
-- ✅ **No external connections**: Your data never leaves your machine
-- ✅ **No tracking**: No telemetry, no data collection
-- ✅ **Secure**: Unique authentication token generated at each startup
+<img src="assets/logo.png" alt="QGeoAI Server" width="900"/>
 
 ---
 
-## 📦 Installation
+**Local HTTP server for deep learning in QGIS - Annotation, training, inference**
+
+</div>
+
+## Overview
+
+QGeoAI Server is a local server that enables QGIS plugins (QAnnotate, QModel Trainer, QPredict, QToolbox) to access AI tools (PyTorch, SAM2, YOLO) without burdening QGIS.
+
+<table>
+<tr>
+<td width="50%">
+
+**Architecture Benefits**
+- Dependency isolation (PyTorch, Ultralytics)
+- No model reloading between operations
+- QGIS stays lightweight and responsive
+- Automatic CUDA support for NVIDIA GPUs
+
+</td>
+<td width="50%">
+
+**Privacy & Security**
+- 100% local (`127.0.0.1` only)
+- No external connections
+- No telemetry or tracking
+- Token-based authentication
+
+</td>
+</tr>
+</table>
+
+## Installation
 
 ### Prerequisites
 
-- Python 3.10 or higher
-- 5 GB disk space (for SAM2 models)
-- Optional: NVIDIA GPU with drivers installed (for CUDA acceleration)
+- **Python 3.10+**
+- **5 GB disk space** (SAM2 models)
+- **NVIDIA GPU** (optional, for CUDA acceleration)
 
-### Installation in 2 steps
-
-#### 1. Create Python environment
-
+### Quick Install
 ```bash
+# 1. Create Python environment
 # Windows
 python -m venv %USERPROFILE%\.qgeoai\env
 
 # Linux / Mac
 python3 -m venv ~/.qgeoai/env
-```
 
-#### 2. Install the server
-
-```bash
+# 2. Install server
 cd qgeoai_server
 python install_server.py
 ```
 
-**What does the installation do?**
-
+**Installation process:**
 1. Copies files to `~/.qgeoai/server/`
-2. Installs required dependencies (FastAPI, PyTorch, etc.)
-3. Downloads SAM2 models (4 models, ~1.5 GB total)
-4. Automatically detects and configures GPU support if available
-5. Creates a startup script
+2. Installs dependencies (FastAPI, PyTorch, etc.)
+3. Downloads SAM2 models (4 models, ~1.5 GB)
+4. Detects and configures GPU if available
+5. Creates startup scripts
 
-⏱️ **Installation time**: 10-20 minutes (depending on your connection)
+**Installation time**: 10-20 minutes
 
-### Verify installation
-
+### Verify Installation
 ```bash
 python check_installation.py
 ```
 
-You should see:
+Expected output:
 ```
 ✓ QGeoAI directory exists
 ✓ Python environment found
@@ -92,16 +98,13 @@ You should see:
 ✓ PyTorch with CUDA support
 ```
 
----
+## Usage
 
-## 🚀 Usage
+### Automatic Startup (Recommended)
 
-### Automatic startup (recommended)
+The server starts automatically when you use any QGeoAI plugin in QGIS. No manual intervention needed.
 
-The server starts **automatically** when you use a QGeoAI plugin in QGIS. Nothing to do!
-
-### Manual startup (if needed)
-
+### Manual Startup
 ```bash
 # Windows
 %USERPROFILE%\.qgeoai\start_server.bat
@@ -110,22 +113,18 @@ The server starts **automatically** when you use a QGeoAI plugin in QGIS. Nothin
 ~/.qgeoai/start_server.sh
 ```
 
-### From Python / QGIS
-
+### Python API
 ```python
 from qgeoai_client import QGeoAIClient
 
 client = QGeoAIClient()
 
-# Check if server is running
+# Auto-start if needed
 if not client.is_server_running():
     client.start_server()
 ```
 
----
-
-## 🔧 Architecture
-
+## Architecture
 ```
 ~/.qgeoai/
 ├── env/                    # Isolated Python environment
@@ -144,21 +143,21 @@ if not client.is_server_running():
 └── start_server.bat/sh   # Launch script
 ```
 
----
+## Plugins
 
-## 🛠️ Plugins using the server
+<table>
+<tr>
+<td width="25%" align="center"><b>QAnnotate</b><br/>Dataset creation</td>
+<td width="25%" align="center"><b>QModel Trainer</b><br/>Model training</td>
+<td width="25%" align="center"><b>QPredict</b><br/>Inference</td>
+<td width="25%" align="center"><b>QToolbox</b><br/>Processing</td>
+</tr>
+</table>
 
-- **QAnnotate**: Create annotated datasets for model training
-- **QModel Trainer**: Train deep learning models directly in QGIS
-- **QPredict**: Run inference with models trained using QModel Trainer
-- **QToolbox**: Collection of geospatial processing tools
+## Troubleshooting
 
----
-
-## 🐛 Troubleshooting
-
-### Server won't start
-
+<details>
+<summary><b>Server won't start</b></summary>
 ```bash
 # Check Python environment
 ~/.qgeoai/env/bin/python --version  # Linux/Mac
@@ -171,122 +170,180 @@ if not client.is_server_running():
 cd qgeoai_server
 python install_server.py
 ```
+</details>
 
-### "Port already in use"
+<details>
+<summary><b>Port already in use</b></summary>
 
 The server automatically finds a free port between 8765 and 8775. Check the port used:
-
 ```bash
 cat ~/.qgeoai/server.port  # Linux/Mac
 type %USERPROFILE%\.qgeoai\server.port  # Windows
 ```
+</details>
 
-### GPU / CUDA error
+<details>
+<summary><b>GPU not detected</b></summary>
+```bash
+# Verify drivers
+nvidia-smi
 
-If your GPU is not detected:
+# Reinstall PyTorch with CUDA
+cd qgeoai_server
+python install_server.py  # Auto-detects GPU
+```
 
-1. Verify NVIDIA drivers are installed: `nvidia-smi`
-2. Reinstall PyTorch with CUDA: 
-   ```bash
-   cd qgeoai_server
-   python install_server.py  # Automatically detects and configures
-   ```
-3. The server also works in CPU-only mode. However, using a GPU is highly recommended.
+Note: CPU mode works but is slower for SAM2 and YOLO.
+</details>
 
-### QGIS plugins can't find the server
+<details>
+<summary><b>QGIS can't find server</b></summary>
 
+In QGIS Python Console:
 ```python
-# In QGIS Python Console
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path.home() / '.qgeoai'))
 
 from qgeoai_client import QGeoAIClient
 client = QGeoAIClient()
-print(client.is_server_running())  # Should display True
+print(client.is_server_running())  # Should be True
 ```
+</details>
 
-### Check logs
-
+<details>
+<summary><b>Check logs</b></summary>
 ```bash
 # Server logs
 cat ~/.qgeoai/logs/server.log  # Linux/Mac
 type %USERPROFILE%\.qgeoai\logs\server.log  # Windows
 
-# Startup logs (if startup problem)
+# Startup logs
 cat ~/.qgeoai/logs/server_debug.log  # Linux/Mac
 type %USERPROFILE%\.qgeoai\logs\server_debug.log  # Windows
 ```
+</details>
 
----
+## Security & Privacy
 
-## 🔐 Security and Privacy
+**Your data never leaves your machine**
 
-### How does it work?
+<table>
+<tr>
+<td width="50%">
 
-1. **Token authentication**: A unique random token is generated at each startup and stored in `~/.qgeoai/server.token`
-2. **Localhost only**: Server listens on `127.0.0.1`, not `0.0.0.0` → impossible to access from the network
-3. **No telemetry**: No data sent to external servers
-4. **Open source**: You can inspect the code and verify it does nothing suspicious
+**Security Features**
+- Token authentication per session
+- Binds to `127.0.0.1` (localhost only)
+- No external API calls
+- Open source (fully auditable)
 
-### Can I use QGeoAI Server on sensitive data?
+</td>
+<td width="50%">
 
-**Yes, absolutely.** All operations are performed locally on your machine. No data is transmitted over the Internet. It's exactly like using classic QGIS, but with better software architecture.
+**Safe for Sensitive Data**
+- All processing is local
+- No internet transmission
+- No data collection
+- Same security as QGIS itself
 
----
+</td>
+</tr>
+</table>
 
-## 🤝 Support and Contribution
+## Support & Contribution
 
-### Having issues?
+### Community Support
 
-1. Check the documentation: https://qgeoai.nextelia.fr/
-2. Run `python check_installation.py` for diagnostics
-3. Check logs in `~/.qgeoai/logs/`
-4. Open an issue on GitHub with:
-   - Your OS (Windows / Linux / Mac)
-   - Relevant logs
-   - Steps to reproduce the issue
-5. For operational support, personalized assistance or integration into your projects, contact us directly via hello@nextelia.fr or the dedicated contact form.
+- **Documentation**: [qgeoai.nextelia.fr](https://qgeoai.nextelia.fr)
+- **Issues**: [GitHub Issues](../../issues)
+- **Diagnostics**: Run `python check_installation.py`
 
-⚠️ The suite is free and open-source. Professional support and custom integrations are available as paid services to ensure sustainable development.
+### Professional Support
+
+For operational support, custom integrations, or training:
+
+- **Email**: [hello@nextelia.fr](mailto:hello@nextelia.fr)
+- **Website**: [nextelia.fr](https://nextelia.fr)
+
+The suite is free and open-source. Professional services ensure sustainable development.
 
 ### Contributing
 
 This project is developed as an open, production-grade GeoAI platform for QGIS.
 
 We welcome:
-• Bug reports
-• Reproducible issues
-• Documentation improvements
-• Feedback from real-world use cases
+- Bug reports with reproducible steps
+- Documentation improvements
+- Real-world feedback
 
 For larger changes, new features or architectural modifications, please open an issue first to discuss alignment with the project roadmap.
 
 The roadmap is maintained by the core team to ensure long-term stability, consistency and production readiness.
 
----
+## License
 
-## 📄 License
+<div align="center">
 
-**QGeoAI Server** is part of the **QGeoAI Tools** suite developed by Nextelia®  
+**QGeoAI Server** - Part of **QGeoAI Tools** suite
+
+Developed by [**Nextelia®**](https://nextelia.fr)
+
 This project is released under GPLv2+ to ensure that GeoAI workflows remain open, auditable and sustainable for the geospatial community.
 
+</div>
+
+## Acknowledgments
+
+<table>
+<tr>
+<td><b>Project</b></td>
+<td><b>License</b></td>
+<td><b>Purpose</b></td>
+</tr>
+<tr>
+<td><a href="https://github.com/facebookresearch/segment-anything-2">SAM2</a> (Meta AI)</td>
+<td>Apache-2.0 / BSD-3</td>
+<td>Segmentation</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ultralytics/ultralytics">Ultralytics</a></td>
+<td>AGPL-3.0</td>
+<td>YOLO framework</td>
+</tr>
+<tr>
+<td><a href="https://pytorch.org">PyTorch</a></td>
+<td>BSD-3</td>
+<td>Deep learning</td>
+</tr>
+<tr>
+<td><a href="https://fastapi.tiangolo.com">FastAPI</a></td>
+<td>MIT</td>
+<td>Web framework</td>
+</tr>
+<tr>
+<td><a href="https://github.com/qubvel/segmentation_models.pytorch">segmentation-models-pytorch</a></td>
+<td>MIT</td>
+<td>Architectures</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DPIRD-DMA/Building-Regulariser">Building-Regulariser</a></td>
+<td>MIT</td>
+<td>Geometry tools</td>
+</tr>
+<tr>
+<td><a href="https://github.com/DPIRD-DMA/Smoothify">Smoothify</a></td>
+<td>MIT</td>
+<td>Smoothing</td>
+</tr>
+</table>
+
 ---
 
-## 🙏 Acknowledgments
+<div align="center">
 
-This project uses:
+**Made for the geospatial community**
 
-- **SAM2** (Copyright Meta AI) - Segment Anything Model 2 (Apache-2.0, BSD-3-Clause) See licenses/sam2 for details
-- **Ultralytics** - YOLO framework (AGPL-3.0)
-- **PyTorch** - Deep learning
-- **FastAPI** - Modern web framework (MIT)
-- **segmentation-models-pytorch** - Segmentation architectures (MIT)
-- [Building-Regulariser](https://github.com/DPIRD-DMA/Building-Regulariser) (MIT)
-- [Smoothify](https://github.com/DPIRD-DMA/Smoothify) (MIT)
+**Copyright** © 2026 Nextelia® • **Version** 0.9.0 • **Updated** January 15, 2026
 
----
-
-**Copyright**: © 2026 Nextelia®  
-**Version**: 0.9.0  
-**Last updated**: January 15, 2026
+</div>
