@@ -162,6 +162,7 @@ if not client.is_server_running():
 # Check Python environment
 ~/.qgeoai/env/bin/python --version  # Linux/Mac
 %USERPROFILE%\.qgeoai\env\Scripts\python --version  # Windows
+```
 
 # Check dependencies
 ~/.qgeoai/env/bin/pip list | grep fastapi
@@ -169,8 +170,6 @@ if not client.is_server_running():
 # Reinstall if needed
 cd qgeoai_server
 python install_server.py
-```
-
 </details>
 
 <details>
@@ -181,7 +180,6 @@ The server automatically finds a free port between 8765 and 8775. Check the port
 cat ~/.qgeoai/server.port  # Linux/Mac
 type %USERPROFILE%\.qgeoai\server.port  # Windows
 ```
-
 </details>
 
 <details>
@@ -189,8 +187,10 @@ type %USERPROFILE%\.qgeoai\server.port  # Windows
 ```bash
 # Verify drivers
 nvidia-smi
+```
 
 # Reinstall PyTorch with CUDA
+```
 cd qgeoai_server
 python install_server.py  # Auto-detects GPU
 ```
@@ -221,8 +221,10 @@ print(client.is_server_running())  # Should be True
 # Server logs
 cat ~/.qgeoai/logs/server.log  # Linux/Mac
 type %USERPROFILE%\.qgeoai\logs\server.log  # Windows
+```
 
 # Startup logs
+```
 cat ~/.qgeoai/logs/server_debug.log  # Linux/Mac
 type %USERPROFILE%\.qgeoai\logs\server_debug.log  # Windows
 ```
