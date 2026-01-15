@@ -1,10 +1,13 @@
 <p align="center">
-  ![QGIS](https://img.shields.io/badge/QGIS-3.40%20LTE-2F6F8E?style=flat-square)
-  ![Python](https://img.shields.io/badge/Python-%3E%3D3.10-F0DB4F?style=flat-square)
-  [![Documentation](https://img.shields.io/badge/Documentation-Read-4CAF50?style=flat-square)](https://qgeoai.nextelia.fr/)
-  ![Release](https://img.shields.io/badge/Release-0.9-607D8B?style=flat-square)
-  ![Licence](https://img.shields.io/badge/License-GPLv2+-009688?style=flat-square)
+  <img src="https://img.shields.io/badge/QGIS-3.40%20LTE-2F6F8E?style=flat-square" />
+  <img src="https://img.shields.io/badge/Python-%3E%3D3.10-F0DB4F?style=flat-square" />
+  <a href="https://qgeoai.nextelia.fr/">
+    <img src="https://img.shields.io/badge/Documentation-Read-4CAF50?style=flat-square" />
+  </a>
+  <img src="https://img.shields.io/badge/Release-0.9-607D8B?style=flat-square" />
+  <img src="https://img.shields.io/badge/License-GPLv2+-009688?style=flat-square" />
 </p>
+
 
 
 # QGeoAI Server
