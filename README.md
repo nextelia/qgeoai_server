@@ -29,6 +29,7 @@
 
 QGeoAI Server is a local server that enables QGIS plugins (QAnnotate, QModel Trainer, QPredict, QToolbox) to access AI tools (PyTorch, SAM2, YOLO) without burdening QGIS.
 
+<div align="center">
 <table>
 <tr>
 <td width="50%">
@@ -51,6 +52,7 @@ QGeoAI Server is a local server that enables QGIS plugins (QAnnotate, QModel Tra
 </td>
 </tr>
 </table>
+</div>
 
 ## Installation
 
@@ -145,14 +147,12 @@ if not client.is_server_running():
 
 ## Plugins
 
-<table>
-<tr>
-<td width="25%" align="center"><b>QAnnotate</b><br/>Dataset creation</td>
-<td width="25%" align="center"><b>QModel Trainer</b><br/>Model training</td>
-<td width="25%" align="center"><b>QPredict</b><br/>Inference</td>
-<td width="25%" align="center"><b>QToolbox</b><br/>Processing</td>
-</tr>
-</table>
+
+- **QAnnotate** Dataset creation
+- **QModel Trainer** Model training
+- **QPredic** Inference
+- **QToolbox** Processing
+
 
 ## Troubleshooting
 
@@ -170,6 +170,7 @@ if not client.is_server_running():
 cd qgeoai_server
 python install_server.py
 ```
+
 </details>
 
 <details>
@@ -180,6 +181,7 @@ The server automatically finds a free port between 8765 and 8775. Check the port
 cat ~/.qgeoai/server.port  # Linux/Mac
 type %USERPROFILE%\.qgeoai\server.port  # Windows
 ```
+
 </details>
 
 <details>
@@ -194,6 +196,7 @@ python install_server.py  # Auto-detects GPU
 ```
 
 Note: CPU mode works but is slower for SAM2 and YOLO.
+
 </details>
 
 <details>
@@ -209,6 +212,7 @@ from qgeoai_client import QGeoAIClient
 client = QGeoAIClient()
 print(client.is_server_running())  # Should be True
 ```
+
 </details>
 
 <details>
@@ -222,6 +226,7 @@ type %USERPROFILE%\.qgeoai\logs\server.log  # Windows
 cat ~/.qgeoai/logs/server_debug.log  # Linux/Mac
 type %USERPROFILE%\.qgeoai\logs\server_debug.log  # Windows
 ```
+
 </details>
 
 ## Security & Privacy
