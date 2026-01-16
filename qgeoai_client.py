@@ -108,18 +108,54 @@ class QGeoAIClient:
     def is_server_running(self) -> bool:
         """
         Check if the server is running and responsive
+        Scans ports 8765-8775 to find any running QGeoAI server
         
         Returns:
             True if server is running, False otherwise
         """
-        try:
-            response = requests.get(
-                f"{self.base_url}/health",
-                timeout=2
-            )
-            return response.status_code == 200
-        except RequestException:
-            return False
+        # First try the cached base_url if we have one
+        if self._base_url is not None:
+            try:
+                response = requests.get(
+                    f"{self._base_url}/health",
+                    timeout=2
+                )
+                if response.status_code == 200:
+                    return True
+            except RequestException:
+                pass
+        
+        # Then try port from file
+        port_file = self.config_dir / 'server.port'
+        if port_file.exists():
+            try:
+                port = int(port_file.read_text().strip())
+                response = requests.get(
+                    f"http://127.0.0.1:{port}/health",
+                    timeout=1
+                )
+                if response.status_code == 200:
+                    # Update cached URL
+                    self._base_url = f"http://127.0.0.1:{port}"
+                    return True
+            except:
+                pass
+        
+        # Finally scan common ports
+        for port in range(8765, 8776):
+            try:
+                response = requests.get(
+                    f"http://127.0.0.1:{port}/health",
+                    timeout=0.5
+                )
+                if response.status_code == 200:
+                    # Update cached URL
+                    self._base_url = f"http://127.0.0.1:{port}"
+                    return True
+            except:
+                continue
+        
+        return False
     
     def start_server(self, wait: bool = True, max_wait: int = 15) -> bool:
         """
@@ -393,24 +429,6 @@ class QGeoAIClient:
         except RequestException as e:
             logger.error(f"Smoothing failed: {e}")
             raise
-
-    # Placeholder methods for future phases
-    def start_training(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Start a training job (Phase 2)"""
-        raise NotImplementedError("Training endpoints will be implemented in Phase 2")
-    
-    def get_training_status(self, job_id: str) -> Dict[str, Any]:
-        """Get training job status (Phase 2)"""
-        raise NotImplementedError("Training endpoints will be implemented in Phase 2")
-    
-    def cancel_training(self, job_id: str) -> Dict[str, Any]:
-        """Cancel a training job (Phase 2)"""
-        raise NotImplementedError("Training endpoints will be implemented in Phase 2")
-    
-    def run_inference(self, model_path: str, input_path: str, **params) -> Dict[str, Any]:
-        """Run model inference (Phase 3)"""
-        raise NotImplementedError("Prediction endpoints will be implemented in Phase 3")
-    
     
     # =========================================================================
     # SAM2 Annotation operations
