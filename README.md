@@ -85,7 +85,7 @@ python install_server.py
 
 **Installation time**: 10-20 minutes
 
-**optional:**
+**Optional:**
 To use YOLO11 with pretrained weights:
 
 1. **Download**: https://docs.ultralytics.com/models/yolo11/
