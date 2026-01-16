@@ -85,6 +85,16 @@ python install_server.py
 
 **Installation time**: 10-20 minutes
 
+**optional**
+To use YOLO11 with pretrained weights:
+
+1. **Download**: https://docs.ultralytics.com/models/yolo11/
+2. **Place** `.pt` files in: `%USERPROFILE%\.qgeoai\server\models\` (Windows) or `~/.qgeoai/server/models/` (Linux/Mac)
+3. **Compatible models**:
+   - Detection: `yolo11n.pt`, `yolo11s.pt`, `yolo11m.pt`, `yolo11l.pt`, `yolo11x.pt`
+   - Segmentation: `yolo11n-seg.pt`, `yolo11s-seg.pt`, etc.
+   - OBB: `yolo11n-obb.pt`, `yolo11s-obb.pt`, etc.
+
 ### Verify Installation
 ```bash
 python check_installation.py
