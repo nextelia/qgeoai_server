@@ -386,7 +386,7 @@ class QGeoAIClient:
                     "area_tolerance": area_tolerance,
                     "num_cores": num_cores
                 },
-                timeout=self.timeout
+                timeout=300
             )
             response.raise_for_status()
             return response.json()
