@@ -190,10 +190,10 @@ class QGeoAIClient:
         
         # Path to Python environment
         if sys.platform == 'win32':
-            python_exe = self.config_dir / 'env' / 'Scripts' / 'pythonw.exe'
+            python_exe = self.config_dir / 'env' / 'Scripts' / 'python.exe'
             if not python_exe.exists():
-                # Fallback to python.exe if pythonw not found
-                python_exe = self.config_dir / 'env' / 'Scripts' / 'python.exe'
+                # Fallback to pythonw.exe if pythonw not found
+                python_exe = self.config_dir / 'env' / 'Scripts' / 'pythonw.exe'
         else:
             python_exe = self.config_dir / 'env' / 'bin' / 'python'
         
@@ -215,19 +215,21 @@ class QGeoAIClient:
             
             logger.info(f"Server logs: {log_file}")
             
-            # Use subprocess to start detached process
-            if sys.platform == 'win32':
-                with open(log_file, 'w') as f:
+            # Start server attached to QGIS process (dies with QGIS)
+            with open(log_file, 'w') as f:
+                if sys.platform == 'win32':
+                    # Use CREATE_NO_WINDOW to hide console
+                    CREATE_NO_WINDOW = 0x08000000
+                    
                     self._server_process = subprocess.Popen(
                         [str(python_exe), str(server_script)],
                         stdout=f,
                         stderr=subprocess.STDOUT,
+                        creationflags=CREATE_NO_WINDOW
                     )
-            else:
-                with open(log_file, 'w') as f:
+                else:
                     self._server_process = subprocess.Popen(
                         [str(python_exe), str(server_script)],
-                        start_new_session=True,
                         stdout=f,
                         stderr=subprocess.STDOUT,
                     )
@@ -422,13 +424,31 @@ class QGeoAIClient:
                     "area_tolerance": area_tolerance,
                     "num_cores": num_cores
                 },
-                timeout=300
+                timeout=self.timeout
             )
             response.raise_for_status()
             return response.json()
         except RequestException as e:
             logger.error(f"Smoothing failed: {e}")
             raise
+
+    # Placeholder methods for future phases
+    def start_training(self, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Start a training job (Phase 2)"""
+        raise NotImplementedError("Training endpoints will be implemented in Phase 2")
+    
+    def get_training_status(self, job_id: str) -> Dict[str, Any]:
+        """Get training job status (Phase 2)"""
+        raise NotImplementedError("Training endpoints will be implemented in Phase 2")
+    
+    def cancel_training(self, job_id: str) -> Dict[str, Any]:
+        """Cancel a training job (Phase 2)"""
+        raise NotImplementedError("Training endpoints will be implemented in Phase 2")
+    
+    def run_inference(self, model_path: str, input_path: str, **params) -> Dict[str, Any]:
+        """Run model inference (Phase 3)"""
+        raise NotImplementedError("Prediction endpoints will be implemented in Phase 3")
+    
     
     # =========================================================================
     # SAM2 Annotation operations
