@@ -294,7 +294,7 @@ class QGeoAIClient:
                     "output_path": str(output_path),
                     "params": params
                 },
-                timeout=self.timeout
+                timeout=300
             )
             response.raise_for_status()
             return response.json()

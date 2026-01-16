@@ -127,7 +127,7 @@ def regularize_buildings(request: RegularizeRequest):
             'diagonal_threshold_reduction': request.params.get('diagonal_threshold_reduction', 15.0),
             'allow_circles': request.params.get('allow_circles', True),
             'circle_threshold': request.params.get('circle_threshold', 0.9),
-            'num_cores': request.params.get('num_cores', 0),  # 0 = use all cores
+            'num_cores': 1,
             'include_metadata': request.params.get('include_metadata', False),
             'neighbor_alignment': request.params.get('neighbor_alignment', False),
             'neighbor_search_distance': request.params.get('neighbor_search_distance', 100.0),
